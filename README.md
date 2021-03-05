@@ -1,5 +1,6 @@
 # SGP: Self-supervised Geometric Perception
-[CVPR 2021 Oral] Self-supervised Geometric Perception
+[CVPR 2021 Oral] Self-supervised Geometric Perception 
+https://arxiv.org/abs/2103.03114
 
 ## Introduction
 In short, SGP is, to the best of our knowledge, the first general framework for feature learning in geometric perception without any supervision from ground-truth geometric labels. 
