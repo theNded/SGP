@@ -1,9 +1,9 @@
-# Self-supervised Geometry Perception
+# Self-supervised Geometric Perception
 
 ## Disclaimer
 In comparison to the code for the paper submission, this repository has been fully rewritten for a better readability and easier generalization. Please file a GitHub issue if there is anything buggy.
 
-Since the final results are heavily depending on the RANSAC variations in geometry perception, we expect discrepancies comparing to the numbers in the paper. Again, please file an issue if a significant difference is observed.
+Since the final results are heavily depending on the RANSAC variations in geometric perception, we expect minor discrepancies comparing to the numbers in the paper due to the randomness. Again, please submit an issue if a significant difference is observed.
 
 ### TODO
 - [ ] 2D: Minimal test dataset and dataloader provided by the author of [CAPS](https://github.com/qianqianwang68/caps).
@@ -17,7 +17,7 @@ git clone --recursive https://github.com/theNded/SGP.git
 This will by default clone the submodules [FCGF](https://github.com/chrischoy/FCGF) and [CAPS](https://github.com/qianqianwang68/caps) for 3D and 2D perception, respectively. Please follow the instructions in the corresponding repositories to configure the submodule(s) of interest. 
 
 ## Datasets
-For the 3D perception task, please download the [3DMatch dataset](https://drive.google.com/file/d/1P5xS4ZGrmuoElZbKeC6bM5UoWz8H9SL1/view) reorganized by us that aggregate point clouds by scenes. The reorganized [test set](https://drive.google.com/file/d/1AmmADbhk5X62Q6CnsbJcwm1BK0Uov1yG/view?usp=sharing) is also available.
+For the 3D perception task, please download the [3DMatch dataset](https://drive.google.com/file/d/1P5xS4ZGrmuoElZbKeC6bM5UoWz8H9SL1/view) reorganized by us that aggregates point clouds by scenes. The reorganized [test set](https://drive.google.com/file/d/1AmmADbhk5X62Q6CnsbJcwm1BK0Uov1yG/view?usp=sharing) is also available.
 
 For the 2D perception task, please download the [MegaDepth dataset](https://drive.google.com/file/d/1-o4TRLx6qm8ehQevV7nExmVJXfMxj657/view) provided by the author of CAPS.
 
@@ -33,7 +33,7 @@ Note our codebase is non-intrusive, i.e., the original repository are not modifi
 
 
 ## Self-supervised training
-The training runs in teacher-student meta loops, started with a bootstrap step (`bs`) supervised by hand-crafted features (SIFT/FPFH), followed by actual training loops (`00`, `01`) that trains a deep feature (CAPS/FCGF) by itself. After similarly configuring `config_sgp.yml`, run
+The training runs in teacher-student meta loops, started with a bootstrap step (`bs`) supervised by hand-crafted features (SIFT/FPFH), followed by actual training loops (`00`, `01`) that trains a deep feature (CAPS/FCGF) with itself. After similarly configuring `config_sgp.yml`, run
 ```
 python perception3d/sgp.py --config /path/to/config.yml
 ```
