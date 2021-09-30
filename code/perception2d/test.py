@@ -7,7 +7,7 @@ sys.path.append(project_path)
 caps_path = os.path.join(project_path, 'ext', 'caps')
 sys.path.append(caps_path)
 
-from dataset.caps_train_test import DatasetCAPS
+from dataset.megadepth_test import DatasetMegaDepthTest
 from perception2d.adaptor import CAPSConfigParser, caps_test
 
 import numpy as np
@@ -22,9 +22,21 @@ if __name__ == '__main__':
         'reference. It overrides the default config file, but will be '
         'overridden by other command line inputs.')
     parser.add('--debug', action='store_true')
+    parser.add('--output', type=str, default='caps_test_result.npz')
     config = parser.get_config()
 
     # Note: for testing, our own interface would suffices.
-    dataset = DatasetCAPS(config.datadir, config.scenes)
-    caps_test(dataset, config)
+    config.match_ratio_test = False
+    dataset = DatasetMegaDepthTest(config.datadir, config.scenes, config.label_dir)
+    r_errs, t_errs = caps_test(dataset, config)
 
+    rot_recall = (r_errs < 10.0)
+    angular_trans_recall = (t_errs < 10.0)
+    print('Rotation Recall: {}/{} = {}'.format(
+        rot_recall.sum(), len(rot_recall),
+        float(rot_recall.sum()) / len(rot_recall)))
+    print('Translation Recall: {}/{} = {}'.format(
+        angular_trans_recall.sum(), len(angular_trans_recall),
+        float(angular_trans_recall.sum()) / len(angular_trans_recall)))
+
+    np.savez(config.output, rotation_errs=r_errs, translation_errs=t_errs)

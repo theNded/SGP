@@ -11,8 +11,8 @@ import cv2
 import torch
 
 from sgp_base import SGPBase
-from dataset.caps_sgp import DatasetCAPSSGP
-from perception2d.adaptor import CAPSConfigParser, DatasetCAPSSGPAdaptor, CAPSModel, caps_train, caps_test, align
+from dataset.megadepth_sgp import DatasetMegaDepthSGP
+from perception2d.adaptor import CAPSConfigParser, DatasetMegaDepthSGPAdaptor, CAPSModel, caps_train, caps_test, align
 from geometry.image import *
 
 
@@ -63,7 +63,7 @@ class SGP2DFundamental(SGPBase):
 
         if config.restart_meta_iter < 0:
             # Only sample a subset for teaching.
-            teach_dataset = DatasetCAPSSGP(config.datadir,
+            teach_dataset = DatasetMegaDepthSGP(config.datadir,
                                            config.scenes,
                                            pseudo_label_path_bs,
                                            'teaching',
@@ -73,8 +73,8 @@ class SGP2DFundamental(SGPBase):
             print('Dataset size: {}'.format(len(teach_dataset)))
             sgp.teach_bootstrap(teach_dataset, config)
 
-            learn_dataset = DatasetCAPSSGPAdaptor(
-                DatasetCAPSSGP(config.datadir,
+            learn_dataset = DatasetMegaDepthSGPAdaptor(
+                DatasetMegaDepthSGP(config.datadir,
                                config.scenes,
                                pseudo_label_path_bs,
                                'learning',
@@ -85,11 +85,12 @@ class SGP2DFundamental(SGPBase):
             config.logdir = os.path.join(base_logdir, 'bs')
             sgp.learn(learn_dataset, config)
 
+        config.match_ratio_test = False
         start_meta_iter = max(config.restart_meta_iter, 0)
         for i in range(start_meta_iter, config.max_meta_iters):
             pseudo_label_path_i = os.path.join(base_pseudo_label_dir,
                                                '{:02d}'.format(i))
-            teach_dataset = DatasetCAPSSGP(config.datadir,
+            teach_dataset = DatasetMegaDepthSGP(config.datadir,
                                            config.scenes,
                                            pseudo_label_path_i,
                                            'teaching',
@@ -99,8 +100,8 @@ class SGP2DFundamental(SGPBase):
             model = CAPSModel(config)
             sgp.teach(teach_dataset, model, config)
 
-            learn_dataset = DatasetCAPSSGPAdaptor(
-                DatasetCAPSSGP(config.datadir,
+            learn_dataset = DatasetMegaDepthSGPAdaptor(
+                DatasetMegaDepthSGP(config.datadir,
                                config.scenes,
                                pseudo_label_path_i,
                                'learning',

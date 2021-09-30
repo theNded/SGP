@@ -22,7 +22,7 @@ if __name__ == '__main__':
         'reference. It overrides the default config file, but will be '
         'overridden by other command line inputs.')
     parser.add('--debug', action='store_true')
-    parser.add('--output', type=str, default='test_result.npz')
+    parser.add('--output', type=str, default='fcgf_test_result.npz')
     config = parser.get_config()
 
     dataset = Dataset3DMatchTest(config.dataset_path, config.scenes)

@@ -17,7 +17,7 @@ PSEUDO_LABEL_FNAME = 'pseudo-label.log'
 
 
 # Train and test sets are identical for CAPS
-class DatasetCAPSSGP(DatasetBase):
+class DatasetMegaDepthSGP(DatasetBase):
     def __init__(self,
                  data_root,
                  scenes,
@@ -46,7 +46,7 @@ class DatasetCAPSSGP(DatasetBase):
                 label_root))
             self.mode = 'learning'
 
-        super(DatasetCAPSSGP, self).__init__(data_root, scenes)
+        super(DatasetMegaDepthSGP, self).__init__(data_root, scenes)
 
     # override
     def parse_scene(self, root, scene):

@@ -6,7 +6,6 @@ In comparison to the code for the paper submission, this repository has been ful
 Since the final benchmark results depend on RANSAC (in performing robust model estimation), we expect minor discrepancies comparing to the numbers published in the paper (due to randomness of RANSAC). Again, please submit an issue if a significant difference is observed.
 
 ### TODO
-- [ ] 2D: Minimal test dataset and dataloader provided by the author of [CAPS](https://github.com/qianqianwang68/caps).
 - [ ] Release Pretrained weights.
 
 ## Setup
@@ -19,17 +18,19 @@ This will by default clone the submodules [FCGF](https://github.com/chrischoy/FC
 ## Datasets
 For the 3D perception task, please download the [3DMatch dataset](https://drive.google.com/file/d/1P5xS4ZGrmuoElZbKeC6bM5UoWz8H9SL1/view) reorganized by us that aggregates point clouds by scenes. The reorganized [test set](https://drive.google.com/file/d/1AmmADbhk5X62Q6CnsbJcwm1BK0Uov1yG/view?usp=sharing) is also available.
 
-For the 2D perception task, please download the [MegaDepth dataset](https://drive.google.com/file/d/1-o4TRLx6qm8ehQevV7nExmVJXfMxj657/view) provided by the author of CAPS.
+For the 2D perception task, please download the [MegaDepth dataset](https://drive.google.com/file/d/1-o4TRLx6qm8ehQevV7nExmVJXfMxj657/view) provided by the author of CAPS. The test set has not been officially released, so please contact [CAPS authors](https://github.com/qianqianwang68/caps) for the data. We only provide the data loader.
 
 ## Vanilla training and testing
 Copy and/or modify the `config_[train|test].yml` files in `perception3d`. The configurable parameters can be found in `perception3d/adaptor.py`. Then run
 ```
 python perception3d/train.py --config /path/to/config.yml
-python perception3d/test.py --config /path/to/config.yml
+python perception3d/test.py --config /path/to/config.yml --weights /path/to/weights.pth
 ```
-The same applies to 2D. 
+You may also add `--debug` to visualize the registration/alignment results. The same applies to 2D. 
 
-Note our codebase is non-intrusive, i.e., the original repository are not modified, hence there are minor inconsistencies in configurations between 2D and 3D. Please carefuly check correspondent config options.
+For a sanity check, you may first use pretrained weights of deep features (i.e., supervised oracle) that are available on the correspondent websites/GitHub repos. The system should be able to run seamlessly.
+
+Note our codebase is non-intrusive, i.e., the original repository are not modified, hence there are minor inconsistencies in configurations between 2D and 3D. For instance, pretrained weights are named as `weights` for FCGF and `ckpt_path` for CAPS. Please carefuly check correspondent config options located in `adaptor.py`.
 
 
 ## Self-supervised training

@@ -10,8 +10,9 @@ sys.path.append(caps_path)
 from ext.caps.CAPS.caps_model import CAPSModel
 from ext.caps.utils import cycle
 
-from dataset.caps_train_test import DatasetCAPS
-from dataset.caps_sgp import DatasetCAPSSGP
+from dataset.megadepth_train import DatasetMegaDepthTrain
+from dataset.megadepth_test import DatasetMegaDepthTest
+from dataset.megadepth_sgp import DatasetMegaDepthSGP
 from geometry.image import *
 
 from geometry.common import rotation_error, angular_translation_error
@@ -60,6 +61,13 @@ class CAPSConfigParser(configargparse.ArgParser):
                  type=str,
                  default='caps_pseudo_label',
                  help='the pseudo-gt directory storing pairs and F matrices')
+        self.add(
+            '--label_dir',
+            type=str,
+            default='',
+            help=
+            'the gt directory storing pairs and F matrices. Reserved for pose test set.'
+        )
 
         # SGP options
         self.add('--scenes',
@@ -81,11 +89,11 @@ class CAPSConfigParser(configargparse.ArgParser):
                  help='performs ratio test in feature matching')
         self.add('--match_ratio_thr',
                  type=float,
-                 default=0.6,
+                 default=0.75,
                  help='ratio between best and second best matchings')
         self.add('--ransac_thr',
                  type=float,
-                 default=1e-4,
+                 default=1e-3,
                  help='RANSAC threshold in estimating essential matrices')
 
         self.add(
@@ -258,7 +266,7 @@ def my_collate(batch):
     return torch.utils.data.dataloader.default_collate(batch)
 
 
-class DatasetCAPSAdaptor(Dataset):
+class DatasetMegaDepthAdaptor(Dataset):
     def __init__(self, dataset, config):
         self.dataset = dataset
         self.config = config
@@ -291,9 +299,9 @@ class DatasetCAPSAdaptor(Dataset):
 
 
 # For vanilla train & test
-class DatasetCAPSTrainAdaptor(DatasetCAPSAdaptor):
+class DatasetMegaDepthTrainAdaptor(DatasetMegaDepthAdaptor):
     def __init__(self, dataset, config):
-        super(DatasetCAPSTrainAdaptor, self).__init__(dataset, config)
+        super(DatasetMegaDepthTrainAdaptor, self).__init__(dataset, config)
 
     def __getitem__(self, idx):
         im_src, im_dst, cam_src, cam_dst, _ = self.dataset[idx]
@@ -341,9 +349,9 @@ class DatasetCAPSTrainAdaptor(DatasetCAPSAdaptor):
 
 
 # For SGP train
-class DatasetCAPSSGPAdaptor(DatasetCAPSAdaptor):
+class DatasetMegaDepthSGPAdaptor(DatasetMegaDepthAdaptor):
     def __init__(self, dataset, config):
-        super(DatasetCAPSSGPAdaptor, self).__init__(dataset, config)
+        super(DatasetMegaDepthSGPAdaptor, self).__init__(dataset, config)
 
     def __getitem__(self, idx):
         im1, im2, K_src, K_dst, F = self.dataset[idx]
@@ -401,7 +409,7 @@ def align(im_src, im_dst, K_src, K_dst, detector, feature, model, config):
     num_matches = len(matches)
 
     # Too few matches
-    if num_matches < 5:  # 5-pts method
+    if num_matches <= 5:  # 5-pts method
         return np.eye(3), np.eye(3), np.ones(
             (3)), kpts_src, kpts_dst, [], np.zeros((len(matches)))
 
