@@ -26,6 +26,7 @@ if __name__ == '__main__':
     config = parser.get_config()
 
     # Note: for testing, our own interface would suffices.
+    config.match_ratio_test = False
     dataset = DatasetCAPSTest(config.datadir, config.scenes, config.label_dir)
     r_errs, t_errs = caps_test(dataset, config)
 

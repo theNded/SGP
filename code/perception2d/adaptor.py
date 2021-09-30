@@ -86,7 +86,7 @@ class CAPSConfigParser(configargparse.ArgParser):
                  help='performs ratio test in feature matching')
         self.add('--match_ratio_thr',
                  type=float,
-                 default=0.6,
+                 default=0.75,
                  help='ratio between best and second best matchings')
         self.add('--ransac_thr',
                  type=float,
@@ -406,7 +406,7 @@ def align(im_src, im_dst, K_src, K_dst, detector, feature, model, config):
     num_matches = len(matches)
 
     # Too few matches
-    if num_matches < 5:  # 5-pts method
+    if num_matches <= 5:  # 5-pts method
         return np.eye(3), np.eye(3), np.ones(
             (3)), kpts_src, kpts_dst, [], np.zeros((len(matches)))
 
@@ -478,12 +478,13 @@ def caps_test(dataset, config):
 
         r_err = rotation_error(R, T_src2dst_gt[:3, :3])
         t_err = angular_translation_error(t, T_src2dst_gt[:3, 3])
+        print(r_err, t_err)
         r_errs.append(r_err)
         t_errs.append(t_err)
 
         if config.debug:
             im = draw_matches(kpts_src, kpts_dst, matches, im_src, im_dst, F,
-                              mask)
+                              mask)#=np.ones((len(matches))))
             cv2.imshow('matches', im)
             cv2.waitKey(-1)
 

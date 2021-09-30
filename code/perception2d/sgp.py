@@ -85,6 +85,7 @@ class SGP2DFundamental(SGPBase):
             config.logdir = os.path.join(base_logdir, 'bs')
             sgp.learn(learn_dataset, config)
 
+        config.match_ratio_test = False
         start_meta_iter = max(config.restart_meta_iter, 0)
         for i in range(start_meta_iter, config.max_meta_iters):
             pseudo_label_path_i = os.path.join(base_pseudo_label_dir,
