@@ -10,7 +10,6 @@ import open3d as o3d
 
 from dataset.base import DatasetBase
 from geometry.image import compute_fundamental_from_poses, detect_keypoints, extract_feats, match_feats, estimate_essential, draw_matches
-from skimage import io
 
 
 # Train and test sets are identical for CAPS
@@ -83,4 +82,4 @@ class DatasetMegaDepthTest(DatasetBase):
 
     # override
     def load_data(self, folder, fname):
-        return io.imread(fname)
+        return cv2.imread(fname)
