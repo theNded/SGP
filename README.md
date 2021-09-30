@@ -35,7 +35,7 @@ Deep 3D features like [FCGF](https://github.com/chrischoy/FCGF) can be trained w
 
 ## Code
 
-See `code/`.
+Please see `code/` for detailed intructions about how to use the code base.
 
 
 
