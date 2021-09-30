@@ -6,7 +6,6 @@ In comparison to the code for the paper submission, this repository has been ful
 Since the final results are heavily depending on the RANSAC variations in geometry perception, we expect discrepancies comparing to the numbers in the paper. Again, please file an issue if a significant difference is observed.
 
 ### TODO
-- [ ] 3D: Due to the changes of MinkowskiEngine and the Open3D RANSAC registration, current recall on 3DMatch is 2-3% lower than in the paper for all the methods (either supervised baseline or our self-supervised approach). Fix needed.
 - [ ] 2D: Minimal test dataset and dataloader provided by the author of [CAPS](https://github.com/qianqianwang68/caps).
 - [ ] Release Pretrained weights.
 

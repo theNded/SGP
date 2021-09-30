@@ -292,9 +292,6 @@ def load_fcgf_model(config):
 
 
 def register(pcd_src, pcd_dst, feature, solver, model, config):
-    pcd_src = pcd_src.voxel_down_sample(config.voxel_size)
-    pcd_dst = pcd_dst.voxel_down_sample(config.voxel_size)
-
     pcd_src, feat_src = extract_feats(pcd_src, feature, config.voxel_size,
                                       model)
     pcd_dst, feat_dst = extract_feats(pcd_dst, feature, config.voxel_size,
