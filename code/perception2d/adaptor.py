@@ -10,9 +10,9 @@ sys.path.append(caps_path)
 from ext.caps.CAPS.caps_model import CAPSModel
 from ext.caps.utils import cycle
 
-from dataset.caps_train import DatasetCAPSTrain
-from dataset.caps_test import DatasetCAPSTest
-from dataset.caps_sgp import DatasetCAPSSGP
+from dataset.megadepth_train import DatasetMegaDepthTrain
+from dataset.megadepth_test import DatasetMegaDepthTest
+from dataset.megadepth_sgp import DatasetMegaDepthSGP
 from geometry.image import *
 
 from geometry.common import rotation_error, angular_translation_error
@@ -263,7 +263,7 @@ def my_collate(batch):
     return torch.utils.data.dataloader.default_collate(batch)
 
 
-class DatasetCAPSAdaptor(Dataset):
+class DatasetMegaDepthAdaptor(Dataset):
     def __init__(self, dataset, config):
         self.dataset = dataset
         self.config = config
@@ -296,9 +296,9 @@ class DatasetCAPSAdaptor(Dataset):
 
 
 # For vanilla train & test
-class DatasetCAPSTrainAdaptor(DatasetCAPSAdaptor):
+class DatasetMegaDepthTrainAdaptor(DatasetMegaDepthAdaptor):
     def __init__(self, dataset, config):
-        super(DatasetCAPSTrainAdaptor, self).__init__(dataset, config)
+        super(DatasetMegaDepthTrainAdaptor, self).__init__(dataset, config)
 
     def __getitem__(self, idx):
         im_src, im_dst, cam_src, cam_dst, _ = self.dataset[idx]
@@ -346,9 +346,9 @@ class DatasetCAPSTrainAdaptor(DatasetCAPSAdaptor):
 
 
 # For SGP train
-class DatasetCAPSSGPAdaptor(DatasetCAPSAdaptor):
+class DatasetMegaDepthSGPAdaptor(DatasetMegaDepthAdaptor):
     def __init__(self, dataset, config):
-        super(DatasetCAPSSGPAdaptor, self).__init__(dataset, config)
+        super(DatasetMegaDepthSGPAdaptor, self).__init__(dataset, config)
 
     def __getitem__(self, idx):
         im1, im2, K_src, K_dst, F = self.dataset[idx]

@@ -14,10 +14,10 @@ from skimage import io
 
 
 # Train and test sets are identical for CAPS
-class DatasetCAPSTest(DatasetBase):
+class DatasetMegaDepthTest(DatasetBase):
     def __init__(self, data_root, scenes, label_root):
         self.data_root = data_root
-        super(DatasetCAPSTest, self).__init__(label_root, scenes)
+        super(DatasetMegaDepthTest, self).__init__(label_root, scenes)
 
     # override
     def parse_scene(self, label_root, scene):

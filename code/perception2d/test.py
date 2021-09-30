@@ -7,7 +7,7 @@ sys.path.append(project_path)
 caps_path = os.path.join(project_path, 'ext', 'caps')
 sys.path.append(caps_path)
 
-from dataset.caps_test import DatasetCAPSTest
+from dataset.megadepth_test import DatasetMegaDepthTest
 from perception2d.adaptor import CAPSConfigParser, caps_test
 
 import numpy as np
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     # Note: for testing, our own interface would suffices.
     config.match_ratio_test = False
-    dataset = DatasetCAPSTest(config.datadir, config.scenes, config.label_dir)
+    dataset = DatasetMegaDepthTest(config.datadir, config.scenes, config.label_dir)
     r_errs, t_errs = caps_test(dataset, config)
 
     rot_recall = (r_errs < 10.0)
