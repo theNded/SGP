@@ -3,7 +3,7 @@
 ## Disclaimer
 In comparison to the code for the paper submission, this repository has been fully rewritten for a better readability and easier generalization. Please file a GitHub issue if there is anything buggy.
 
-Since the final results are heavily depending on the RANSAC variations in geometric perception, we expect minor discrepancies comparing to the numbers in the paper due to the randomness. Again, please submit an issue if a significant difference is observed.
+Since the final benchmark results depend on RANSAC (in performing robust model estimation), we expect minor discrepancies comparing to the numbers published in the paper (due to randomness of RANSAC). Again, please submit an issue if a significant difference is observed.
 
 ### TODO
 - [ ] 2D: Minimal test dataset and dataloader provided by the author of [CAPS](https://github.com/qianqianwang68/caps).
