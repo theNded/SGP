@@ -3,4 +3,4 @@ exp_name: caps_test
 datadir: '/home/wei/Workspace/data/CAPS-MegaDepth-release-light/test'
 label_dir: '/home/wei/Workspace/data/CAPS-MegaDepth-release-light/test-pose'
 ckpt_path: '/home/wei/Downloads/caps-pretrained.pth'
-scenes: [medium]
+scenes: [hard]

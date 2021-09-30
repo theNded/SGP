@@ -90,7 +90,7 @@ class CAPSConfigParser(configargparse.ArgParser):
                  help='ratio between best and second best matchings')
         self.add('--ransac_thr',
                  type=float,
-                 default=1e-4,
+                 default=1e-3,
                  help='RANSAC threshold in estimating essential matrices')
 
         self.add(
