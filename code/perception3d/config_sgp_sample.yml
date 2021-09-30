@@ -1,0 +1,3 @@
+dataset_path: '/home/wei/Workspace/data/threedmatch_reorg'
+pseudo_label_dir: fcgf_pseudo_label
+scenes: [7-scenes-chess@seq-01]

@@ -1,0 +1,4 @@
+# training from scratch using a single gpu, default configs in config.py file
+exp_name: caps_train
+datadir: /home/wei/Workspace/data/CAPS-MegaDepth-release-light/train
+scenes: [1001, 0020]

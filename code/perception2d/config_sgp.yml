@@ -1,0 +1,10 @@
+# training from scratch using a single gpu, default configs in config.py file
+exp_name: caps_sgp
+datadir: '/home/wei/Workspace/data/CAPS-MegaDepth-release-light/train'
+pseudo_label_dir: 'caps_pseudo_label'
+scenes: [0000, 0005]
+
+sample_rate: 0.2
+inlier_ratio_thr: 0.3
+n_iters: 40000
+save_interval: 10000

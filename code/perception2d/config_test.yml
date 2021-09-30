@@ -1,0 +1,5 @@
+# training from scratch using a single gpu, default configs in config.py file
+exp_name: caps_test
+datadir: '/home/wei/Workspace/data/CAPS-MegaDepth-release-light/test'
+ckpt_path: '/home/wei/Downloads/caps-pretrained.pth'
+scenes: [0323]

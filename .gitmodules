@@ -1,0 +1,6 @@
+[submodule "code/ext/FCGF"]
+	path = code/ext/FCGF
+	url = https://github.com/chrischoy/FCGF.git
+[submodule "code/ext/caps"]
+	path = code/ext/caps
+	url = https://github.com/qianqianwang68/caps.git
