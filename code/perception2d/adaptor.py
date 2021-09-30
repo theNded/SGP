@@ -61,10 +61,13 @@ class CAPSConfigParser(configargparse.ArgParser):
                  type=str,
                  default='caps_pseudo_label',
                  help='the pseudo-gt directory storing pairs and F matrices')
-        self.add('--label_dir',
-                 type=str,
-                 default='',
-                 help='the gt directory storing pairs and F matrices. Reserved for pose test set.')
+        self.add(
+            '--label_dir',
+            type=str,
+            default='',
+            help=
+            'the gt directory storing pairs and F matrices. Reserved for pose test set.'
+        )
 
         # SGP options
         self.add('--scenes',
@@ -478,13 +481,12 @@ def caps_test(dataset, config):
 
         r_err = rotation_error(R, T_src2dst_gt[:3, :3])
         t_err = angular_translation_error(t, T_src2dst_gt[:3, 3])
-        print(r_err, t_err)
         r_errs.append(r_err)
         t_errs.append(t_err)
 
         if config.debug:
             im = draw_matches(kpts_src, kpts_dst, matches, im_src, im_dst, F,
-                              mask)#=np.ones((len(matches))))
+                              mask)
             cv2.imshow('matches', im)
             cv2.waitKey(-1)
 
