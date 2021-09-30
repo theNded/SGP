@@ -12,10 +12,9 @@ from dataset.base import DatasetBase
 from geometry.image import compute_fundamental_from_poses, detect_keypoints, extract_feats, match_feats, estimate_essential, draw_matches
 
 
-# Train and test sets are identical for CAPS
-class DatasetCAPS(DatasetBase):
+class DatasetCAPSTrain(DatasetBase):
     def __init__(self, root, scenes):
-        super(DatasetCAPS, self).__init__(root, scenes)
+        super(DatasetCAPSTrain, self).__init__(root, scenes)
 
     # override
     def parse_scene(self, root, scene):

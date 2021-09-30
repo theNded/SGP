@@ -10,7 +10,8 @@ sys.path.append(caps_path)
 from ext.caps.CAPS.caps_model import CAPSModel
 from ext.caps.utils import cycle
 
-from dataset.caps_train_test import DatasetCAPS
+from dataset.caps_train import DatasetCAPSTrain
+from dataset.caps_test import DatasetCAPSTest
 from dataset.caps_sgp import DatasetCAPSSGP
 from geometry.image import *
 
@@ -60,6 +61,10 @@ class CAPSConfigParser(configargparse.ArgParser):
                  type=str,
                  default='caps_pseudo_label',
                  help='the pseudo-gt directory storing pairs and F matrices')
+        self.add('--label_dir',
+                 type=str,
+                 default='',
+                 help='the gt directory storing pairs and F matrices. Reserved for pose test set.')
 
         # SGP options
         self.add('--scenes',

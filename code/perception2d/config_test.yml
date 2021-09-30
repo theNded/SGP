@@ -1,5 +1,6 @@
 # training from scratch using a single gpu, default configs in config.py file
 exp_name: caps_test
 datadir: '/home/wei/Workspace/data/CAPS-MegaDepth-release-light/test'
+label_dir: '/home/wei/Workspace/data/CAPS-MegaDepth-release-light/test-pose'
 ckpt_path: '/home/wei/Downloads/caps-pretrained.pth'
-scenes: [0323]
+scenes: [easy, medium, hard]
