@@ -13,6 +13,13 @@ def make_o3d_pointcloud(xyz):
 
 
 def extract_feats(pcd, feature_type, voxel_size, model=None):
+    xyz = np.asarray(pcd.points)
+    _, sel = ME.utils.sparse_quantize(xyz,
+                                      return_index=True,
+                                      quantization_size=voxel_size)
+    xyz = xyz[sel]
+    pcd = make_o3d_pointcloud(xyz)
+
     if feature_type == 'FPFH':
         radius_normal = voxel_size * 2
         pcd.estimate_normals(
@@ -28,12 +35,6 @@ def extract_feats(pcd, feature_type, voxel_size, model=None):
 
     elif feature_type == 'FCGF':
         DEVICE = torch.device('cuda')
-        xyz = np.asarray(pcd.points)
-        _, sel = ME.utils.sparse_quantize(xyz,
-                                          return_index=True,
-                                          quantization_size=voxel_size)
-
-        xyz = xyz[sel]
         coords = ME.utils.batched_coordinates(
             [torch.floor(torch.from_numpy(xyz) / voxel_size).int()]).to(DEVICE)
 
@@ -41,7 +42,7 @@ def extract_feats(pcd, feature_type, voxel_size, model=None):
         sinput = ME.SparseTensor(feats, coordinates=coords)  # .to(DEVICE)
 
         # (N, 32)
-        return make_o3d_pointcloud(xyz), model(sinput).F.detach().cpu().numpy()
+        return pcd, model(sinput).F.detach().cpu().numpy()
 
     else:
         raise NotImplementedError(
